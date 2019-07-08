@@ -1,2 +1,3 @@
 # logjs
-Hierarchical logger for Javascript projects
+
+Heirarchical logger for Javascript based projects
