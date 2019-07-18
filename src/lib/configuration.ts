@@ -13,6 +13,7 @@ export class ConfigureClass{
     defaultLevel: LogLevel = LogLevel.debug;
     appenderFactory:AppenderFactory;
     defaultAppender: LogAppender = undefined;
+
     /**
      *
      *

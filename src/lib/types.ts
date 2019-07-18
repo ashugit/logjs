@@ -35,7 +35,12 @@ export interface LogModule {
     appender?: LogAppender
 };
 
-
+/**
+ *
+ *
+ * @export
+ * @enum {number}
+ */
 export enum LogAppenderTag{
     console = 1,
     syslog = 2,
