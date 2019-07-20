@@ -20,7 +20,7 @@ export enum  LogLevel {
  * @interface LogAppender
  */
 export interface LogAppender {
-    append(...args : any[]);
+    append: (...args : any[]) => void;
 }
 
 /**

@@ -10,7 +10,7 @@ import {LogLevel, LogModule} from './types';
  */
 export default class Logger{
     name: string;
-    level: LogLevel;
+    level?: LogLevel;
     configuration: ConfigureClass;
 
 
@@ -47,7 +47,7 @@ export default class Logger{
      * @memberof Logger
      */
     canLog(level:LogLevel):boolean{
-        return level >= this.configuration.getLevel(this.name);
+        return true //level >= this.configuration.getLevel(this.name);
     }
 
 
@@ -59,7 +59,9 @@ export default class Logger{
      */
     trace(...args: any[]){
         if(this.canLog(LogLevel.trace)){
-            this.configuration.getAppender(this.name).append(args.unshift(`TRACE::${module}::>`));
+            this.configuration
+              .getAppender(this.name)
+              .append(args.unshift(`TRACE::${this.name}::>`));
         }
     };
 
@@ -71,7 +73,9 @@ export default class Logger{
      */
     debug(...args: any[]){
         if(this.canLog(LogLevel.debug)){
-            this.configuration.getAppender(this.name).append(args.unshift(`DEBUG::${module}::>`));
+            this.configuration
+              .getAppender(this.name)
+              .append(args.unshift(`DEBUG::${this.name}::>`));
         }
     };
 
@@ -83,7 +87,9 @@ export default class Logger{
      */
     info(...args: any[]){
         if(this.canLog(LogLevel.info)){
-            this.configuration.getAppender(this.name).append(args.unshift(`INFO::${module}::>`));
+            this.configuration
+              .getAppender(this.name)
+              .append(args.unshift(`INFO::${this.name}::>`));
         }
     };
 
@@ -95,7 +101,9 @@ export default class Logger{
      */
     warn(...args: any[]){
         if(this.canLog(LogLevel.warn)){
-            this.configuration.getAppender(this.name).append(args.unshift(`WARN::${module}::>`));
+            this.configuration
+              .getAppender(this.name)
+              .append(args.unshift(`WARN::${this.name}::>`));
         }
     };
 
@@ -107,7 +115,9 @@ export default class Logger{
      */
     error(...args: any[]){
         if(this.canLog(LogLevel.error)){
-            this.configuration.getAppender(this.name).append(args.unshift(`ERROR::${module}::>`));
+            this.configuration
+              .getAppender(this.name)
+              .append(args.unshift(`ERROR::${this.name}::>`));
         }
     };
 

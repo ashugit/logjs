@@ -9,10 +9,10 @@ import AppenderFactory from './appenders/factory';
  * @class ConfigureClass
  */
 export class ConfigureClass{
-    modules: any;
-    defaultLevel: LogLevel = LogLevel.debug;
-    appenderFactory:AppenderFactory;
-    defaultAppender: LogAppender = undefined;
+    modules: { [key: string]: LogModule;} = {};
+    defaultLevel: LogLevel = LogLevel.trace;
+    appenderFactory?:AppenderFactory;
+    defaultAppender?: LogAppender = new AppenderFactory().getAppender();
 
     /**
      *
@@ -21,11 +21,12 @@ export class ConfigureClass{
      * @memberof ConfigureClass
      */
     initialize(list: Array<LogModule>, defaultLevel: LogLevel = LogLevel.debug){
-        let modules = {};
+        let modules:any = {};
         list.forEach((e:LogModule) => {
             modules[e.name] = e;
         });
         this.modules = modules;
+        this.defaultLevel = defaultLevel;
 
         if(!this.appenderFactory){
             this.appenderFactory = new AppenderFactory();
@@ -50,7 +51,12 @@ export class ConfigureClass{
      * @memberof ConfigureClass
      */
     getLevel(name: string):LogLevel{
-        return this.modules[name] ? this.modules[name].level : this.defaultLevel;
+
+        if (this.modules[name]) {
+            return this.modules[name].level || this.defaultLevel;
+        }
+
+        return this.defaultLevel;
     }
 
     /**
@@ -61,7 +67,9 @@ export class ConfigureClass{
      * @memberof ConfigureClass
      */
     getAppender(name: string):LogAppender{
-        return this.modules[name] ? this.modules[name].appender : this.defaultAppender;
+        return this.modules[name] && this.modules[name].appender
+          ? this.modules[name].appender
+          : this.defaultAppender;
     }
 }
 // Keeping a singleton export of configuration class
