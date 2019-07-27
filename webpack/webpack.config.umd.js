@@ -18,7 +18,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, '../dist'),
     libraryTarget: 'umd',
-    library: 'Logger',
+    library: 'LJS',
     filename: './index.umd.js'
   }
 };

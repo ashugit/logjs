@@ -1,5 +1,6 @@
 import Configuration, { ConfigureClass } from './configuration';
 import {LogLevel, LogModule} from './types';
+import Enums from './enums';
 
 /**
  *
@@ -61,7 +62,7 @@ export default class Logger{
         if(this.canLog(LogLevel.trace)){
             this.configuration
               .getAppender(this.name)
-              .append(args.unshift(`TRACE::${this.name}::>`));
+              .append(Enums.LOG_TYPE.LOG, `TRACE::${this.name}::>`, args);
         }
     };
 
@@ -75,7 +76,7 @@ export default class Logger{
         if(this.canLog(LogLevel.debug)){
             this.configuration
               .getAppender(this.name)
-              .append(args.unshift(`DEBUG::${this.name}::>`));
+              .append(Enums.LOG_TYPE.LOG, `DEBUG::${this.name}::>`, args);
         }
     };
 
@@ -89,7 +90,7 @@ export default class Logger{
         if(this.canLog(LogLevel.info)){
             this.configuration
               .getAppender(this.name)
-              .append(args.unshift(`INFO::${this.name}::>`));
+              .append(Enums.LOG_TYPE.INFO, `INFO::${this.name}::>`, args);
         }
     };
 
@@ -103,7 +104,7 @@ export default class Logger{
         if(this.canLog(LogLevel.warn)){
             this.configuration
               .getAppender(this.name)
-              .append(args.unshift(`WARN::${this.name}::>`));
+              .append(Enums.LOG_TYPE.WARN, `WARN::${this.name}::>`, args);
         }
     };
 
@@ -117,7 +118,7 @@ export default class Logger{
         if(this.canLog(LogLevel.error)){
             this.configuration
               .getAppender(this.name)
-              .append(args.unshift(`ERROR::${this.name}::>`));
+              .append(Enums.LOG_TYPE.ERROR, `ERROR::${this.name}::>`, args);
         }
     };
 
