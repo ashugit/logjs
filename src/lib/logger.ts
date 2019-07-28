@@ -48,7 +48,7 @@ export default class Logger{
      * @memberof Logger
      */
     canLog(level:LogLevel):boolean{
-        return true //level >= this.configuration.getLevel(this.name);
+        return level >= this.configuration.getLevel(this.name);
     }
 
 
