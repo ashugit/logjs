@@ -18,7 +18,7 @@ export default class AppenderFactory{
      * @returns {LogAppender}
      * @memberof AppenderFactory
      */
-    getAppender(tag: LogAppenderTag):LogAppender{
+    getAppender(tag?: LogAppenderTag):LogAppender{
         switch(tag){
             case LogAppenderTag.rollingfile:
                 return new RollingFileAppender();

@@ -1,5 +1,6 @@
 import Configuration, { ConfigureClass } from './configuration';
 import {LogLevel, LogModule} from './types';
+import Enums from './enums';
 
 /**
  *
@@ -10,7 +11,7 @@ import {LogLevel, LogModule} from './types';
  */
 export default class Logger{
     name: string;
-    level: LogLevel;
+    level?: LogLevel;
     configuration: ConfigureClass;
 
 
@@ -20,13 +21,14 @@ export default class Logger{
      * @param {LogLevel} [level=LogLevel.debug]
      * @memberof Logger
      */
-    constructor(name:string, level:LogLevel){
+    constructor(name:string, level?:LogLevel){
         this.name = name;
         this.configuration = Configuration;
         this.setLevel(level);
     };
     /**
-     *
+     * set the level of module as given while initializing
+     * and if it's not present get the level from configuraitions
      *
      * @param {LogLevel} level
      * @memberof Logger
@@ -34,7 +36,7 @@ export default class Logger{
     setLevel(level: LogLevel){
         const logModule: LogModule = {
             name: this.name,
-            level: level
+            level: level || this.configuration.getLevel(this.name)
         };
         this.configuration.updateLevel(logModule);
     }
@@ -59,7 +61,9 @@ export default class Logger{
      */
     trace(...args: any[]){
         if(this.canLog(LogLevel.trace)){
-            this.configuration.getAppender(this.name).append(args.unshift(`TRACE::${module}::>`));
+            this.configuration
+              .getAppender(this.name)
+              .append(Enums.LOG_TYPE.LOG, `TRACE::${this.name}::>`, args);
         }
     };
 
@@ -71,7 +75,9 @@ export default class Logger{
      */
     debug(...args: any[]){
         if(this.canLog(LogLevel.debug)){
-            this.configuration.getAppender(this.name).append(args.unshift(`DEBUG::${module}::>`));
+            this.configuration
+              .getAppender(this.name)
+              .append(Enums.LOG_TYPE.LOG, `DEBUG::${this.name}::>`, args);
         }
     };
 
@@ -83,7 +89,9 @@ export default class Logger{
      */
     info(...args: any[]){
         if(this.canLog(LogLevel.info)){
-            this.configuration.getAppender(this.name).append(args.unshift(`INFO::${module}::>`));
+            this.configuration
+              .getAppender(this.name)
+              .append(Enums.LOG_TYPE.INFO, `INFO::${this.name}::>`, args);
         }
     };
 
@@ -95,7 +103,9 @@ export default class Logger{
      */
     warn(...args: any[]){
         if(this.canLog(LogLevel.warn)){
-            this.configuration.getAppender(this.name).append(args.unshift(`WARN::${module}::>`));
+            this.configuration
+              .getAppender(this.name)
+              .append(Enums.LOG_TYPE.WARN, `WARN::${this.name}::>`, args);
         }
     };
 
@@ -107,7 +117,9 @@ export default class Logger{
      */
     error(...args: any[]){
         if(this.canLog(LogLevel.error)){
-            this.configuration.getAppender(this.name).append(args.unshift(`ERROR::${module}::>`));
+            this.configuration
+              .getAppender(this.name)
+              .append(Enums.LOG_TYPE.ERROR, `ERROR::${this.name}::>`, args);
         }
     };
 
