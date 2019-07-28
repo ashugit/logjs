@@ -21,13 +21,14 @@ export default class Logger{
      * @param {LogLevel} [level=LogLevel.debug]
      * @memberof Logger
      */
-    constructor(name:string, level:LogLevel){
+    constructor(name:string, level?:LogLevel){
         this.name = name;
         this.configuration = Configuration;
         this.setLevel(level);
     };
     /**
-     *
+     * set the level of module as given while initializing
+     * and if it's not present get the level from configuraitions
      *
      * @param {LogLevel} level
      * @memberof Logger
@@ -35,7 +36,7 @@ export default class Logger{
     setLevel(level: LogLevel){
         const logModule: LogModule = {
             name: this.name,
-            level: level
+            level: level || this.configuration.getLevel(this.name)
         };
         this.configuration.updateLevel(logModule);
     }
